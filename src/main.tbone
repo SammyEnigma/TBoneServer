@@ -1,0 +1,5 @@
+game = cod4
+
+rcon_host = localhost
+rcon_port = 28960
+rcon_password = test
