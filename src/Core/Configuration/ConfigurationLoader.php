@@ -1,11 +1,11 @@
 <?php
 
 
-namespace src\Core\Configuration;
+namespace Core\Configuration;
 
 /**
  * Class ConfigurationLoader
- * @package src\Core\Configuration
+ * @package Core\Configuration
  */
 class ConfigurationLoader
 {
@@ -29,6 +29,7 @@ class ConfigurationLoader
                 //0 = var name
                 //1 = value
                 if($line[0] != "") {
+                    $line[1] = substr($line[1], 1);
                     $data[$line[0]] = $line[1];
                 }
             }

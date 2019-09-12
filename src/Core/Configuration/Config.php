@@ -1,17 +1,21 @@
 <?php
 
 
-namespace src\Core\Configuration;
+namespace Core\Configuration;
 
 /**
  * Class Config
  *
  * Generic Config class
  *
- * @package src\Core\Configuration
+ * @package Core\Configuration
  */
 class Config
 {
+    /**
+     * @var $setting Config
+     */
+    public static $setting;
     private $main;
 
     public function __construct()

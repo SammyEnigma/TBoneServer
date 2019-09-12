@@ -1,14 +1,14 @@
 <?php
 
 
-namespace src\Core\Configuration;
+namespace Core\Configuration;
 
 /**
  * Class MainConfig
  *
  * Main Configuration Loader
  *
- * @package src\Core\Configuration
+ * @package Core\Configuration
  */
 class MainConfig
 {

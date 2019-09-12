@@ -1,5 +1,9 @@
 game = cod4
 
-rcon_host = localhost
+bot = ^5T^6bone:^7
+
+rcon_host = 192.168.1.6
 rcon_port = 28960
-rcon_password = test
+rcon_password = daLttF7P
+
+log_games_mp = D:\SteamLibrary\steamapps\common\Call of Duty 4\main\games_mp.log

@@ -2,10 +2,17 @@
 
 namespace Core\Rcon;
 
+/**
+ * Class Rcon
+ * @package Core\Rcon
+ */
 class Rcon
 {
     private $gameRcon;
 
+    /**
+     * Rcon constructor.
+     */
     public function __construct()
     {
         require_once ("RconInterface.php");
