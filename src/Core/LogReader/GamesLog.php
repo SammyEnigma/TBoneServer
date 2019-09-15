@@ -4,7 +4,8 @@
 namespace Core\LogReader;
 
 use Core\Configuration\Config;
-use src\Core\LogReader\CallbackFunction;
+use Core\LogReader\Callbacks\CallbackFunction;
+use Core\LogReader\LogObjects\InitGame;
 
 /**
  * Class GamesLog
@@ -22,10 +23,12 @@ class GamesLog extends Reader
         $this->getCallbackRegister()->addCallBack(CallbackFunction::onInitGame);
         $this->getCallbackRegister()->addCallBack(CallbackFunction::onPlayerJoin);
         $this->getCallbackRegister()->addCallBack(CallbackFunction::onKill);
+        $this->getCallbackRegister()->addCallBack(CallbackFunction::onDamage);
         $this->getCallbackRegister()->addCallBack(CallbackFunction::onSay);
         $this->getCallbackRegister()->addCallBack(CallbackFunction::onSayTeam);
         $this->getCallbackRegister()->addCallBack(CallbackFunction::onPlayerDisconnect);
         $this->getCallbackRegister()->addCallBack(CallbackFunction::onTick);
+        $this->getCallbackRegister()->addCallBack(CallbackFunction::onShutdown);
     }
 
     /**
@@ -48,9 +51,9 @@ class GamesLog extends Reader
 
     /**
      * Read / Parse logfile line
-     * @param $line String Line
+     * @param string $line String Line
      */
-    protected function readLine($line)
+    protected function readLine(string $line)
     {
         if(Config::$setting->main()->get("game") == "codwaw"){
             $line = trim($line);
@@ -128,7 +131,7 @@ class GamesLog extends Reader
             $gameSettings[$settings[$i]] = $settings[$i + 1];
         }
 
-        $this->getCallbackRegister()->doCallBacks("onInitGame", array(0 => $time, 1 => $gameSettings));
+        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onInitGame, new InitGame($time, $gameSettings));
     }
 
     /**
@@ -145,7 +148,7 @@ class GamesLog extends Reader
 
         $playerInfo = explode(";",$line);
 
-        $this->getCallbackRegister()->doCallBacks("onPlayerJoin", array(0 => $time, 1 => $playerInfo[1], 2 => $playerInfo[2], 3 => $playerInfo[3]));
+        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onPlayerJoin, array(0 => $time, 1 => $playerInfo[1], 2 => $playerInfo[2], 3 => $playerInfo[3]));
     }
 
     /**
@@ -174,7 +177,7 @@ class GamesLog extends Reader
         $info["mod"] = $message[11];
         $info["body"] = $message[12];
 
-        $this->getCallbackRegister()->doCallBacks("onKill", array(0 => $time, 1 => $info));
+        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onKill, array(0 => $time, 1 => $info));
     }
 
     /**
@@ -200,10 +203,10 @@ class GamesLog extends Reader
 
         switch($type) {
             case "say":
-                $this->getCallbackRegister()->doCallBacks("onSay", array(0 => $time, 1 => $slot, 2 => $guid, 3 => $name, 4 => $text));
+                $this->getCallbackRegister()->doCallBacks(CallbackFunction::onSay, array(0 => $time, 1 => $slot, 2 => $guid, 3 => $name, 4 => $text));
                 break;
             case "sayteam":
-                $this->getCallbackRegister()->doCallBacks("onSayTeam", array(0 => $time, 1 => $slot, 2 => $guid, 3 => $name, 4 => $text));
+                $this->getCallbackRegister()->doCallBacks(CallbackFunction::onSayTeam, array(0 => $time, 1 => $slot, 2 => $guid, 3 => $name, 4 => $text));
                 break;
         }
     }
@@ -222,7 +225,7 @@ class GamesLog extends Reader
 
         $playerInfo = explode(";",$line);
 
-        $this->getCallbackRegister()->doCallBacks("onPlayerDisconnect", array(0 => $time, 1 => $playerInfo[1], 2 => $playerInfo[2], 3 => $playerInfo[3]));
+        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onPlayerDisconnect, array(0 => $time, 1 => $playerInfo[1], 2 => $playerInfo[2], 3 => $playerInfo[3]));
     }
 
     /**
@@ -252,7 +255,7 @@ class GamesLog extends Reader
         $info["mod"] = $message[11];
         $info["body"] = $message[12];
 
-        $this->getCallbackRegister()->doCallBacks("onDamage", array(0 => $time, 1 => $info));
+        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onDamage, array(0 => $time, 1 => $info));
     }
 
     /**
@@ -261,6 +264,6 @@ class GamesLog extends Reader
      */
     private function onShutdown($time)
     {
-        $this->getCallbackRegister()->doCallBacks("onShutdown", array(0 => $time));
+        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onShutdown, array(0 => $time));
     }
 }

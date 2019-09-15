@@ -1,7 +1,7 @@
 <?php
 
 
-namespace src\Core\LogReader;
+namespace Core\LogReader\Callbacks;
 
 
 class CallbackFunction
@@ -13,4 +13,6 @@ class CallbackFunction
     const onSay = "onSay";
     const onSayTeam = "onSayTeam";
     const onPlayerDisconnect = "onPlayerDisconnect";
+    const onDamage = "onDamage";
+    const onShutdown = "onShutdown";
 }

@@ -1,7 +1,7 @@
 <?php
-namespace Core\LogReader;
+namespace Core\LogReader\Callbacks;
 
-use src\Core\LogReader\CallbackFunction;
+use Core\LogReader\LogObjects\LogObjectInterface;
 
 /**
  * Class callbackRegister
@@ -23,8 +23,6 @@ class CallbackRegister
      */
     public function register(&$class, $function)
     {
-        global $Console;
-
         if(in_array($function, $this->functionCallbacks)) {
             if(isset($this->callbacks[$function])) {
                 $this->callbacks[$function][] = &$class;
@@ -44,13 +42,13 @@ class CallbackRegister
     /**
      * Do the callbacks to the other classes with the included data
      * @param $function String function name
-     * @param $data array data
+     * @param LogObjectInterface $data data
      */
-    public function doCallBacks($function, $data)
+    public function doCallBacks(string $function, LogObjectInterface $data)
     {
         if(isset($this->callbacks[$function])) {
             foreach ($this->callbacks[$function] as &$value) {
-                call_user_func_array(array(&$value,$function), $data);
+                call_user_func_array(array(&$value,$function), array($data));
             }
         }
     }

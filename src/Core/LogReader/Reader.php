@@ -2,7 +2,9 @@
 
 namespace Core\LogReader;
 
-use src\Core\LogReader\CallbackFunction;
+
+use Core\LogReader\Callbacks\CallbackFunction;
+use Core\LogReader\Callbacks\CallbackRegister;
 
 /**
  * Class Reader
@@ -75,9 +77,9 @@ abstract class Reader
 
     /**
      * Read / Parse logfile line
-     * @param $line String Line
+     * @param string $line String Line
      */
-    protected abstract function readLine($line);
+    protected abstract function readLine(string $line);
 
     /**
      * Get filesize of log

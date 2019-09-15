@@ -12,8 +12,8 @@ require_once ("Core/Rcon/Rcon.php");
 
 require_once ("Core/LogReader/Reader.php");
 require_once ("Core/LogReader/GamesLog.php");
-require_once ("Core/LogReader/CallbackFunction.php");
-require_once ("Core/LogReader/CallbackRegister.php");
+require_once("Core/LogReader/CallbackFunction.php");
+require_once("Core/LogReader/CallbackRegister.php");
 
 Core\Configuration\Config::$setting = new Core\Configuration\Config();
 $rcon = new \Core\Rcon\Rcon();
