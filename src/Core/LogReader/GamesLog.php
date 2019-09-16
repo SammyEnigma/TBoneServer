@@ -6,6 +6,7 @@ namespace Core\LogReader;
 use Core\Configuration\Config;
 use Core\LogReader\Callbacks\CallbackFunction;
 use Core\LogReader\LogObjects\InitGame;
+use Core\LogReader\LogObjects\PlayerJoin;
 
 /**
  * Class GamesLog
@@ -148,7 +149,7 @@ class GamesLog extends Reader
 
         $playerInfo = explode(";",$line);
 
-        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onPlayerJoin, array(0 => $time, 1 => $playerInfo[1], 2 => $playerInfo[2], 3 => $playerInfo[3]));
+        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onPlayerJoin, new PlayerJoin($time, $playerInfo[3], $playerInfo[2], $playerInfo[1]));
     }
 
     /**
