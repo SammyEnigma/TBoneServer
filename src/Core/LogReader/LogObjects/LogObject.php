@@ -15,6 +15,7 @@ abstract class LogObject implements LogObjectInterface
      */
     public function __construct(int $time)
     {
+        print("Callback LogObject: " . get_called_class() ."\n");
         $this->time = $time;
     }
 

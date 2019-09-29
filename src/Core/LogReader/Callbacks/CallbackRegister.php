@@ -44,7 +44,7 @@ class CallbackRegister
      * @param $function String function name
      * @param LogObjectInterface $data data
      */
-    public function doCallBacks(string $function, LogObjectInterface $data)
+    public function doCallBacks(string $function, ?LogObjectInterface $data)
     {
         if(isset($this->callbacks[$function])) {
             foreach ($this->callbacks[$function] as &$value) {

@@ -2,8 +2,8 @@ game = cod4
 
 bot = ^5T^6bone:^7
 
-rcon_host = 192.168.1.6
-rcon_port = 28960
-rcon_password = daLttF7P
+rcon_host = 192.168.1.10
+rcon_port = 28961
+rcon_password = DFXFmpLC
 
-log_games_mp = D:\SteamLibrary\steamapps\common\Call of Duty 4\main\games_mp.log
+log_games_mp = C:\Program Files (x86)\Steam\steamapps\common\Call of Duty 4\main\games_mp.log
