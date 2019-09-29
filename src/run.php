@@ -19,6 +19,7 @@ require_once ("Core/LogReader/LogObjects/LogObjectInterface.php");
 require_once ("Core/LogReader/LogObjects/LogObject.php");
 
 require_once ("Core/LogReader/LogObjects/PlayerJoin.php");
+require_once ("Core/LogReader/LogObjects/PlayerDisconnect.php");
 require_once ("Core/LogReader/LogObjects/PlayerKill.php");
 require_once ("Core/LogReader/LogObjects/PlayerSay.php");
 require_once ("Core/LogReader/LogObjects/PlayerSayTeam.php");
@@ -26,8 +27,13 @@ require_once ("Core/LogReader/LogObjects/PlayerSayTeam.php");
 require_once ("Core/LogReader/LogObjects/InitGame.php");
 require_once ("Core/LogReader/LogObjects/ShutdownGame.php");
 
+require_once ("Core/Commands/CommandHandler.php");
+
 Core\Configuration\Config::$setting = new Core\Configuration\Config();
 $rcon = new \Core\Rcon\Rcon();
 
 $gamesLog = new \Core\LogReader\GamesLog();
+
+$commandHandler = new \Core\Commands\CommandHandler($gamesLog->getCallbackRegister(), $rcon);
+
 $gamesLog->run();

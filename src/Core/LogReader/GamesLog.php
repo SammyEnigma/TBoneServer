@@ -12,6 +12,7 @@ use Core\LogReader\LogObjects\PlayerJoin;
 use Core\LogReader\LogObjects\PlayerKill;
 use Core\LogReader\LogObjects\PlayerSay;
 use Core\LogReader\LogObjects\shutdownGame;
+use Core\Objects\PlayerName;
 
 /**
  * Class GamesLog
@@ -154,7 +155,7 @@ class GamesLog extends Reader
 
         $playerInfo = explode(";",$line);
 
-        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onPlayerJoin, new PlayerJoin($time, $playerInfo[3], $playerInfo[1], $playerInfo[2]));
+        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onPlayerJoin, new PlayerJoin($time, new PlayerName($playerInfo[3]), $playerInfo[1], $playerInfo[2]));
     }
 
     /**
@@ -218,7 +219,7 @@ class GamesLog extends Reader
 
         $playerInfo = explode(";",$line);
 
-        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onPlayerDisconnect, new PlayerDisconnect($time, $playerInfo[3], $playerInfo[1], $playerInfo[2]));
+        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onPlayerDisconnect, new PlayerDisconnect($time, new PlayerName($playerInfo[3]), $playerInfo[1], $playerInfo[2]));
     }
 
     /**
