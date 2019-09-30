@@ -6,7 +6,13 @@ namespace Core\LogReader;
 use Core\Configuration\Config;
 use Core\LogReader\Callbacks\CallbackFunction;
 use Core\LogReader\LogObjects\InitGame;
+use Core\LogReader\LogObjects\PlayerDamage;
+use Core\LogReader\LogObjects\PlayerDisconnect;
 use Core\LogReader\LogObjects\PlayerJoin;
+use Core\LogReader\LogObjects\PlayerKill;
+use Core\LogReader\LogObjects\PlayerSay;
+use Core\LogReader\LogObjects\shutdownGame;
+use Core\Objects\PlayerName;
 
 /**
  * Class GamesLog
@@ -149,7 +155,7 @@ class GamesLog extends Reader
 
         $playerInfo = explode(";",$line);
 
-        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onPlayerJoin, new PlayerJoin($time, $playerInfo[3], $playerInfo[2], $playerInfo[1]));
+        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onPlayerJoin, new PlayerJoin($time, new PlayerName($playerInfo[3]), $playerInfo[1], $playerInfo[2]));
     }
 
     /**
@@ -165,20 +171,7 @@ class GamesLog extends Reader
 
         $message = explode(";",$line);
 
-        $info["guid_l"] = $message[1];
-        $info["id_l"] = $message[2];
-        $info["team_l"] = $message[3];
-        $info["name_l"] = $message[4];
-        $info["guid_w"] = $message[5];
-        $info["id_w"] = $message[6];
-        $info["team_w"] = $message[7];
-        $info["name_w"] = $message[8];
-        $info["weapon"] = $message[9];
-        $info["damage"] = $message[10];
-        $info["mod"] = $message[11];
-        $info["body"] = $message[12];
-
-        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onKill, array(0 => $time, 1 => $info));
+        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onKill, new PlayerKill($time, $message));
     }
 
     /**
@@ -204,10 +197,10 @@ class GamesLog extends Reader
 
         switch($type) {
             case "say":
-                $this->getCallbackRegister()->doCallBacks(CallbackFunction::onSay, array(0 => $time, 1 => $slot, 2 => $guid, 3 => $name, 4 => $text));
+                $this->getCallbackRegister()->doCallBacks(CallbackFunction::onSay, new PlayerSay($time, $slot, $guid, $name, $text));
                 break;
             case "sayteam":
-                $this->getCallbackRegister()->doCallBacks(CallbackFunction::onSayTeam, array(0 => $time, 1 => $slot, 2 => $guid, 3 => $name, 4 => $text));
+                $this->getCallbackRegister()->doCallBacks(CallbackFunction::onSayTeam, new PlayerSayTeam($time, $slot, $guid, $name, $text));
                 break;
         }
     }
@@ -226,7 +219,7 @@ class GamesLog extends Reader
 
         $playerInfo = explode(";",$line);
 
-        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onPlayerDisconnect, array(0 => $time, 1 => $playerInfo[1], 2 => $playerInfo[2], 3 => $playerInfo[3]));
+        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onPlayerDisconnect, new PlayerDisconnect($time, new PlayerName($playerInfo[3]), $playerInfo[1], $playerInfo[2]));
     }
 
     /**
@@ -243,20 +236,7 @@ class GamesLog extends Reader
 
         $message = explode(";",$line);
 
-        $info["guid_l"] = $message[1];
-        $info["id_l"] = $message[2];
-        $info["team_l"] = $message[3];
-        $info["name_l"] = $message[4];
-        $info["guid_w"] = $message[5];
-        $info["id_w"] = $message[6];
-        $info["team_w"] = $message[7];
-        $info["name_w"] = $message[8];
-        $info["weapon"] = $message[9];
-        $info["damage"] = $message[10];
-        $info["mod"] = $message[11];
-        $info["body"] = $message[12];
-
-        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onDamage, array(0 => $time, 1 => $info));
+        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onDamage, new PlayerDamage($time, $message));
     }
 
     /**
@@ -265,6 +245,6 @@ class GamesLog extends Reader
      */
     private function onShutdown($time)
     {
-        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onShutdown, array(0 => $time));
+        $this->getCallbackRegister()->doCallBacks(CallbackFunction::onShutdown, new ShutdownGame($time));
     }
 }

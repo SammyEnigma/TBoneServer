@@ -3,7 +3,7 @@ namespace Core\LogReader\LogObjects;
 
 use Core\Objects\PlayerName;
 
-class PlayerJoin extends LogObject
+class PlayerDisconnect extends LogObject
 {
     private $name;
     private $guid;
