@@ -20,3 +20,4 @@ $rcon = new \Core\Rcon\Rcon();
 
 $gamesLog = new \Core\LogReader\GamesLog();
 $gamesLog->run();
+
