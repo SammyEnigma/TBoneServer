@@ -10,6 +10,8 @@ require_once("../vendor/autoload.php");
 require_once ("Core/Configuration/Config.php");
 require_once ("Core/Rcon/Rcon.php");
 
+require_once ("Core/Objects/PlayerName.php");
+
 require_once ("Core/LogReader/Reader.php");
 require_once ("Core/LogReader/GamesLog.php");
 require_once ("Core/LogReader/Callbacks/CallbackFunction.php");

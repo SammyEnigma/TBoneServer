@@ -1,6 +1,7 @@
 game = cod4
 
 bot = ^5T^6bone:^7
+command = !
 
 rcon_host = 192.168.1.10
 rcon_port = 28961
